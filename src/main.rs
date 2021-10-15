@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use rand::prelude::*;
 
 fn one_in(n: u32) -> bool {
@@ -15,6 +17,21 @@ struct File {
     name: String,
     data: Vec<u8>,
     state: FileState,
+}
+
+impl Display for FileState {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match *self {
+            FileState::Open => write!(f, "OPEN"),
+            FileState::Closed => write!(f, "CLOSED"),
+        }
+    }
+}
+
+impl Display for File {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "<{} ({})>", self.name, self.state)
+    }
 }
 
 impl File {
@@ -73,7 +90,7 @@ fn main() {
 
     let text = String::from_utf8_lossy(&buffer);
 
-    println!("{:?}", f3);
+    println!("{}", f3);
     println!("{} is {} bytes long", &f3.name, f3_length);
     println!("{}", text)
 }
