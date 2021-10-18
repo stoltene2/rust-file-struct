@@ -6,17 +6,19 @@ fn one_in(n: u32) -> bool {
     thread_rng().gen_ratio(1, n)
 }
 
+/// Represents the state of a file. Either `Open` or `Closed`
 #[derive(Debug, PartialEq)]
-enum FileState {
+pub enum FileState {
     Open,
     Closed,
 }
 
+/// Struct for representing a "file"
 #[derive(Debug)]
-struct File {
-    name: String,
+pub struct File {
+    pub name: String,
     data: Vec<u8>,
-    state: FileState,
+    pub state: FileState,
 }
 
 impl Display for FileState {
@@ -35,7 +37,7 @@ impl Display for File {
 }
 
 impl File {
-    fn new(name: &str) -> File {
+    pub fn new(name: &str) -> File {
         File {
             name: String::from(name),
             data: Vec::new(),
@@ -49,7 +51,7 @@ impl File {
         f
     }
 
-    fn read(self: &File, save_to: &mut Vec<u8>) -> Result<usize, String> {
+    pub fn read(self: &File, save_to: &mut Vec<u8>) -> Result<usize, String> {
         if self.state == FileState::Closed {
             return Err(String::from("File is not open for reading"));
         }
